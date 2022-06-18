@@ -1,6 +1,8 @@
 <template>
-  <div class="background-primary-shade-9 wi-min-100vw he-min-100vh ai-stretch">
-    <div class="col-1 text-light" @click="generateColors()">Teste</div>
+  <div
+    class="background-primary-shade-9 wi-min-100vw he-min-100vh di-flex ai-stretch jc-center"
+  >
+    <div class="col-1 text-light" @click="generateColors()">Click me</div>
     <!--   <div class="di-flex jc-center al-center">
            <div
           class="pa-10 background-primary background-primary-shade-6:hover bloom-1-dark:hover ro-6"

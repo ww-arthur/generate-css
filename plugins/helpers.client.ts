@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
         style.appendChild(document.createTextNode(css))
         head.appendChild(style)
 
-        /*       const element = document.createElement('a')
+        const element = document.createElement('a')
         element.setAttribute(
           'href',
           'data:application/download;charset=utf-8,' + encodeURIComponent(css),
@@ -17,7 +17,7 @@ export default defineNuxtPlugin(() => {
         element.style.display = 'none'
         document.body.appendChild(element)
         element.click()
-        document.body.removeChild(element) */
+        document.body.removeChild(element)
       },
     },
   }
