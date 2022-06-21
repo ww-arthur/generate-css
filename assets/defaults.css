@@ -1,0 +1,49 @@
+.a-ripple {
+  contain: strict;
+  user-select: none;
+  pointer-events: none;
+  position: absolute !important;
+  border-radius: 50%;
+  will-change: opacity, transform;
+  background-color: currentColor;
+}
+.a-ripple-container {
+  color: inherit;
+  border-radius: inherit;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  contain: strict;
+}
+
+.a-ripple-in {
+  opacity: 0.3;
+  transform-origin: center;
+  transform: translate(-50%, -50%) scale(2.7);
+  transition: all 0.25s cubic-bezier(0, 0, 0.5, 1);
+}
+.a-ripple-out {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  transition: all 0.3s cubic-bezier(0, 0.53, 0.02, 0.97);
+}
+
+.transition {
+  transition: all 0.25s cubic-bezier(0.4, 0.2, 0.4, 1);
+}
+.transition-none {
+  transition: none !important;
+}
+.elevated {
+  box-shadow: inset 0px -1px 2px #0000002f, inset 0px 1px 1px #ffffff0f;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+}
