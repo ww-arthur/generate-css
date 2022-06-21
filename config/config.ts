@@ -1,9 +1,11 @@
+import { ColorValue } from './types'
+let colors: Array<ColorValue> = [
+  { name: 'primary', hash: '#8f00ff' },
+  { name: 'black', hash: '#000000', options: { shades: 0, tones: 0 } },
+  { name: 'white', hash: '#ffffff', options: { tints: 0, tones: 0 } },
+]
 let config = {
-  colors: [
-    { name: 'primary', hash: '#8f00ff' },
-    { name: 'black', hash: '#000000', options: { shades: 0, tones: 0 } },
-    { name: 'light', hash: '#ffffff', options: { tints: 0, tones: 0 } },
-  ],
+  colors,
   themes: ['default', 'dark'],
   spacers: {
     iterations: 11,

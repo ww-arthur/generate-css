@@ -1,21 +1,4 @@
-interface ColorObject {
-  r: number
-  g: number
-  b: number
-  a: number
-}
-interface hslaObject {
-  h: number
-  s: number
-  l: number
-  a: number
-}
-interface ColorValueOptions {
-  tints?: number
-  shades?: number
-  alphas?: number
-  tones?: number
-}
+import { ColorObject, hslaObject, ColorValue } from './types'
 
 export function lighten(color: String, percentage: number) {
   let hslColor = anyToHsla(color)
@@ -161,18 +144,15 @@ export function hslaToHex(color: hslaObject) {
   )}${decimal256ToHex(color.a * 255)}`
 }
 
-export function generateColorValues(
-  name: String,
-  colorHash: String,
-  options: ColorValueOptions,
-) {
-  let colorValues = [[name, colorHash]]
+export function generateColorValues(color: ColorValue) {
+  console.log(color)
+  let colorValues = [[color.name, color.hash]]
   colorValues.push(
     ...Object.entries(
       generateColorObject(
-        colorHash,
-        `${name}-tint-`,
-        options?.tints ?? 10,
+        color.hash,
+        `${color.name}-tint-`,
+        color.options?.tints ?? 10,
         lighten,
       ),
     ),
@@ -180,9 +160,9 @@ export function generateColorValues(
   colorValues.push(
     ...Object.entries(
       generateColorObject(
-        colorHash,
-        `${name}-shade-`,
-        options?.shades ?? 10,
+        color.hash,
+        `${color.name}-shade-`,
+        color.options?.shades ?? 10,
         darken,
       ),
     ),
@@ -190,9 +170,9 @@ export function generateColorValues(
   colorValues.push(
     ...Object.entries(
       generateColorObject(
-        colorHash,
-        `${name}-tone-`,
-        options?.tones ?? 10,
+        color.hash,
+        `${color.name}-tone-`,
+        color.options?.tones ?? 10,
         saturation,
       ),
     ),
@@ -200,9 +180,9 @@ export function generateColorValues(
   colorValues.push(
     ...Object.entries(
       generateColorObject(
-        colorHash,
-        `${name}-blend-`,
-        options?.alphas ?? 10,
+        color.hash,
+        `${color.name}-blend-`,
+        color.options?.alphas ?? 10,
         blend,
       ),
     ),
@@ -250,7 +230,7 @@ export function generateColorObject(
 ) {
   let arr = []
   for (let i = 1; i <= iterations; i++) {
-    arr.push([`${prefix}${i}`, f(color, i / iterations)])
+    arr.push([`${prefix}${i}`, `${f(color, i / iterations)}`])
   }
   return Object.fromEntries(arr)
 }

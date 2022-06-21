@@ -17,7 +17,7 @@ export function useUtilities(options = variables) {
   return {
     o: {
       removeDivider: true,
-      properties: { a: ['overflow'], x: ['overflow-x'], y: ['overflow-y'] },
+      properties: { v: ['overflow'], x: ['overflow-x'], y: ['overflow-y'] },
       values: ['auto', 'hidden', 'visible'],
     },
     di: {

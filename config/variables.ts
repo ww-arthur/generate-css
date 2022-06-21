@@ -11,7 +11,7 @@ let variables = {
     negativeSpacers: generateUtilityObject?.(
       config.spacers.iterations,
       config.spacers.unit,
-      config.spacers.multiplier,
+      -config.spacers.multiplier,
       'n',
     ),
     fontWeights: generateUtilityObject?.(

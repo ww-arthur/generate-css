@@ -52,7 +52,7 @@ a:-webkit-any-link {
   text-decoration-style: none;
   text-decoration-color: none;
 }
-input {
+input[type="text"], input[type="color"] {
   outline: none;
   appearance: none;
   background-color: transparent;
@@ -89,8 +89,5 @@ input {
     background-size: cover;
   }
 
-  .transition {
-    transition: all 0.25s ease-in;
-  }
   `
 }

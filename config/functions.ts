@@ -2,9 +2,7 @@ import { generateColorValues, generateColorGradients } from './colors'
 import variables from './variables'
 import { useUtilities } from './utilities'
 import { useDefault } from './default'
-type UtilityObject = {
-  [key: string]: { properties: any; values: any } | object
-}
+import { UtilityObject, ColorValue } from './types'
 export function addProperty(
   property: string,
   value: string | number,
@@ -145,13 +143,16 @@ export function generateColorClasses(
   let classes = []
   for (var [key, value] of Object.entries(colorValues)) {
     if (options.background) {
-      classes.push([`background-${key}`, `background-color: ${value};`])
+      classes.push([
+        `background-${key}`,
+        `background-color: ${value} !important;`,
+      ])
     }
     if (options.text) {
-      classes.push([`text-${key}`, `color: ${value};`])
+      classes.push([`text-${key}`, `color: ${value} !important;`])
     }
     if (options.border) {
-      classes.push([`border-${key}`, `border-color: ${value};`])
+      classes.push([`border-${key}`, `border-color: ${value} !important;`])
     }
   }
   return classes
@@ -159,7 +160,10 @@ export function generateColorClasses(
 export function generateGradientClasses(colorValues: Object) {
   let classes = []
   for (var [key, value] of Object.entries(colorValues)) {
-    classes.push([`background-${key}`, `background-image: ${value};`])
+    classes.push([
+      `background-${key}`,
+      `background-image: ${value} !important;`,
+    ])
   }
   return classes
 }
@@ -175,6 +179,14 @@ export function generateBloomClasses(colorValues: Object, iterations: number) {
       ])
     }
   }
+  return classes
+}
+export function generateColorScheme(color: ColorValue) {
+  let classes = []
+  let colorValues = generateColorValues(color)
+  classes.push(...generateColorClasses(colorValues))
+  classes.push(...generateGradientClasses(generateColorGradients(colorValues)))
+  classes.push(...generateBloomClasses(colorValues, 10))
   return classes
 }
 export function generateColClasses(iterations: number) {
@@ -208,16 +220,7 @@ export async function generateStyle(options = variables) {
     for (var theme of options.themes) {
       let themeClasses = []
       for (var color of options.colors) {
-        let colorValues = generateColorValues(
-          color.name,
-          color.hash,
-          color.options,
-        )
-        themeClasses.push(...generateColorClasses(colorValues))
-        themeClasses.push(
-          ...generateGradientClasses(generateColorGradients(colorValues)),
-        )
-        themeClasses.push(...generateBloomClasses(colorValues, 10))
+        themeClasses.push(...generateColorScheme(color))
       }
       let selectorClasses = []
       for (var [sName, sSelector] of Object.entries(options.selectors)) {
