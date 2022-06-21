@@ -30,11 +30,16 @@ const props = defineProps({
   },
 })
 function computeColors(template, color, size, rounded) {
-  return `pa-${parseInt(
-    size,
-  )} ro-${rounded} fs-${size} fw-5 bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active  text-${color}-tint-8 text-light-hover background-${color}-tint-2-gradient-top-left background-${color}-shade-2`
+  let templates = {
+    default: ` bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
+     text-${color}-tint-8 text-light-hover background-${color}-tint-2-gradient-top-left background-${color}-shade-2`,
+    text: ` bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
+     text-${color}-tint-3 text-${color}-hover `,
+  }
+  return `pa-${parseInt(size)} ro-${rounded} fs-${size} fw-5 ${
+    templates[template]
+  }`
 }
-console.log(props.color)
 const computedClasses = computed(() => {
   return computeColors(props.template, props.color, props.size, props.rounded)
 })
@@ -44,6 +49,9 @@ const computedClasses = computed(() => {
 .a-button {
   user-select: none;
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.25s ease-in;
 }
 .a-button:hover {
@@ -62,6 +70,5 @@ const computedClasses = computed(() => {
   justify-content: center;
   align-items: center;
   pointer-events: none;
-  position: relative;
 }
 </style>

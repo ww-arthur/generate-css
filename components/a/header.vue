@@ -15,9 +15,7 @@ export default {
     },
   },
   mounted() {
-    document.addEventListener('scroll', (e) => {
-      console.log(evt)
-    })
+    document.addEventListener('scroll', (e) => {})
   },
 }
 </script>

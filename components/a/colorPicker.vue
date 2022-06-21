@@ -1,6 +1,7 @@
 <template>
   <div class="a-color-picker ro-3 elevated">
     <input
+      @blur="$emit('blur')"
       @input="$emit('update:modelValue', $event.target.value)"
       ref="input"
       type="color"

@@ -76,9 +76,7 @@ export default {
       return this.darkMode ? this.dark : this.light
     },
   },
-  mounted() {
-    console.log(this.$attrs)
-  },
+
 }
 </script>
 <style lang="scss" scoped>

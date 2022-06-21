@@ -145,7 +145,7 @@ export function generateColorClasses(
     if (options.background) {
       classes.push([
         `background-${key}`,
-        `background-color: ${value} !important;`,
+        `background-color: ${value} !important; fill: ${value} !important;`,
       ])
     }
     if (options.text) {

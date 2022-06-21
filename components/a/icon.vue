@@ -1,5 +1,6 @@
 <template>
   <svg
+    v-show="actualSize"
     class="icon ov-visible"
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
@@ -41,9 +42,12 @@ const props = defineProps({
   },
   size: {
     type: [String, Number],
-    default: 2,
+    default: 3,
   },
 })
+let actualSize = computed(() =>
+  isNaN(props.size) ? props.size : parseInt(props.size) * 4 * 2 + 'px',
+)
 </script>
 <script>
 export default {
@@ -56,19 +60,20 @@ export default {
     fillOpacity() {
       return this.outline ? 0 : 1
     },
-
-    actualSize() {
-      return isNaN(this.size) ? this.size : parseInt(this.size) * 3 * 6 + 'px'
-    },
   },
 }
 </script>
 <style scoped>
+.wi-0 {
+  width: 0;
+}
 .icon {
+  fill: currentColor;
   aspect-ratio: 1;
   stroke-linecap: round;
   fill-opacity: v-bind(fillOpacity);
-  width: v-bind(actualSize);
+  /* width: v-bind(actualSize) !important; */
+  width: 24px;
   height: auto;
 }
 </style>

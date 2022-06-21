@@ -4,8 +4,8 @@
     <label
       :class="
         isFocused || val
-          ? 'a-input-label--active text-primary-tint-9'
-          : 'a-input-label text-primary-tint-2'
+          ? 'fs-2 a-input-label--active text-primary-tint-9'
+          : 'fs-5 a-input-label text-primary-tint-2'
       "
       ref="label"
     >
@@ -36,7 +36,7 @@
 <script setup>
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: [String, Number],
     default: '',
   },
   color: {
@@ -92,6 +92,7 @@ export default {
       this.isFocused = true
     },
     blur() {
+      this.$emit('blur')
       this.isFocused = false
     },
   },
@@ -99,6 +100,8 @@ export default {
 </script>
 <style>
 .a-input-box {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   position: relative;
   display: flex;
   align-items: flex-end;

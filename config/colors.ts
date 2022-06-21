@@ -13,10 +13,16 @@ export function darken(color: String, percentage: number) {
 
   return hslaToHex(hslColor)
 }
-export function saturation(color: String, percentage: number) {
+export function chroma(color: String, percentage: number) {
   let hslColor = anyToHsla(color)
   hslColor.s = 1 - (percentage > 1 ? 1 : percentage)
 
+  return hslaToHex(hslColor)
+}
+export function tone(color: String, percentage: number) {
+  let hslColor = anyToHsla(color)
+  hslColor.s = hslColor.s - percentage * hslColor.s
+  hslColor.s = hslColor.s > 1 ? 1 : hslColor.s
   return hslaToHex(hslColor)
 }
 export function blend(color: String, percentage: number) {
@@ -25,6 +31,24 @@ export function blend(color: String, percentage: number) {
   hslColor.a = hslColor.a > 1 ? 1 : hslColor.a
 
   return hslaToHex(hslColor)
+}
+export function isValid(color: String) {
+  if (color.includes('#')) {
+    if (color.length === 4 || color.length === 5) {
+      return true
+    } else if (color.length === 7 || color.length === 9) {
+      return true
+    }
+  } else if (color.includes('rgb')) {
+    let rawColor = color.replace(/\s|rgb\(|rgba\(|\)/g, '').trim()
+    let colors = rawColor.includes(',')
+      ? rawColor.split(',')
+      : rawColor.split(' ')
+    if (colors.length >= 3) {
+      return true
+    }
+  }
+  return false
 }
 export function anyToHsla(color: String) {
   let colorObject: ColorObject
@@ -51,7 +75,10 @@ export function anyToHsla(color: String) {
       return hslColor
     }
   } else if (color.includes('rgb')) {
-    let colors = color.replace(/\s|rgb\(|rgba\(|\)/g, '').split(',')
+    let rawColor = color.replace(/\s|rgb\(|rgba\(|\)/g, '').trim()
+    let colors = rawColor.includes(',')
+      ? rawColor.split(',')
+      : rawColor.split(' ')
     colorObject = {
       r: parseInt(colors[0]) / 255,
       g: parseInt(colors[1]) / 255,
@@ -145,13 +172,12 @@ export function hslaToHex(color: hslaObject) {
 }
 
 export function generateColorValues(color: ColorValue) {
-  console.log(color)
-  let colorValues = [[color.name, color.hash]]
+  let colorValues = [[color.name.toLowerCase(), color.hash]]
   colorValues.push(
     ...Object.entries(
       generateColorObject(
         color.hash,
-        `${color.name}-tint-`,
+        `${color.name.toLocaleLowerCase()}-tint-`,
         color.options?.tints ?? 10,
         lighten,
       ),
@@ -161,7 +187,7 @@ export function generateColorValues(color: ColorValue) {
     ...Object.entries(
       generateColorObject(
         color.hash,
-        `${color.name}-shade-`,
+        `${color.name.toLocaleLowerCase()}-shade-`,
         color.options?.shades ?? 10,
         darken,
       ),
@@ -171,9 +197,9 @@ export function generateColorValues(color: ColorValue) {
     ...Object.entries(
       generateColorObject(
         color.hash,
-        `${color.name}-tone-`,
+        `${color.name.toLocaleLowerCase()}-tone-`,
         color.options?.tones ?? 10,
-        saturation,
+        tone,
       ),
     ),
   )
@@ -181,7 +207,7 @@ export function generateColorValues(color: ColorValue) {
     ...Object.entries(
       generateColorObject(
         color.hash,
-        `${color.name}-blend-`,
+        `${color.name.toLocaleLowerCase()}-blend-`,
         color.options?.alphas ?? 10,
         blend,
       ),
