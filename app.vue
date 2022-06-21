@@ -7,7 +7,7 @@
       <div class="pt-10 px-5">
         <div class="fs-8 text-primary-tint-9">Pick a color</div>
         <div class="fs-5 pb-10 text-primary-tint-8">
-          Generate a color scheme for a color
+          Generate a color scheme from a color
         </div>
       </div>
       <div class="px-10 pb-5">
@@ -40,7 +40,7 @@
               class="fl-shrink-0"
               rounded="4"
             >
-              <a-icon icon="minus"></a-icon>
+              <a-icon icon="minus" color="white"></a-icon>
             </a-button>
             <a-input
               v-model="color.options.tints"
@@ -55,7 +55,7 @@
               rounded="4"
               class="fl-shrink-0"
             >
-              <a-icon icon="plus"></a-icon>
+              <a-icon icon="plus" color="white"></a-icon>
             </a-button>
           </template>
           <template #1>
@@ -66,7 +66,7 @@
               class="fl-shrink-0"
               rounded="4"
             >
-              <a-icon icon="minus"></a-icon>
+              <a-icon icon="minus" color="white"></a-icon>
             </a-button>
             <a-input
               v-model="color.options.shades"
@@ -81,7 +81,7 @@
               rounded="4"
               class="fl-shrink-0"
             >
-              <a-icon icon="plus"></a-icon>
+              <a-icon icon="plus" color="white"></a-icon>
             </a-button>
           </template>
           <template #2>
@@ -92,7 +92,7 @@
               class="fl-shrink-0"
               rounded="4"
             >
-              <a-icon icon="minus"></a-icon>
+              <a-icon icon="minus" color="white"></a-icon>
             </a-button>
             <a-input
               v-model="color.options.tones"
@@ -107,7 +107,7 @@
               rounded="4"
               class="fl-shrink-0"
             >
-              <a-icon icon="plus"></a-icon>
+              <a-icon icon="plus" color="white"></a-icon>
             </a-button>
           </template>
           <template #3>
@@ -118,7 +118,7 @@
               class="fl-shrink-0"
               rounded="4"
             >
-              <a-icon icon="minus"></a-icon>
+              <a-icon icon="minus" color="white"></a-icon>
             </a-button>
             <a-input
               v-model="color.options.alphas"
@@ -133,7 +133,7 @@
               rounded="4"
               class="fl-shrink-0"
             >
-              <a-icon icon="plus"></a-icon>
+              <a-icon icon="plus" color="white"></a-icon>
             </a-button>
           </template>
         </a-row>
@@ -151,7 +151,12 @@
             <span class="fw-4 text-white">borders</span>
             for each color variant.
           </p>
-          <a-button size="4" @click="downloadStyle">
+          <a-button
+            template="safe"
+            :color="color.name.toLowerCase()"
+            size="4"
+            @click="downloadStyle"
+          >
             <a-icon icon="download" class="mr-2"></a-icon>
             Download CSS
           </a-button>
