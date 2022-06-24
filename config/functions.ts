@@ -186,7 +186,7 @@ export function generateColorScheme(color: ColorValue) {
   let colorValues = generateColorValues(color)
   classes.push(...generateColorClasses(colorValues))
   classes.push(...generateGradientClasses(generateColorGradients(colorValues)))
-  classes.push(...generateBloomClasses(colorValues, 10))
+  classes.push(...generateBloomClasses(colorValues, 5))
   return classes
 }
 export function generateColClasses(iterations: number) {

@@ -40,54 +40,6 @@ button {
   -moz-appearance: none;
 }
 
-header {
-  position:relative;
-  z-index:10
-}
-a:-webkit-any-link {
-  color: inherit;
-  text-decoration: none;
-  text-decoration-line: none;
-  text-decoration-thickness: none;
-  text-decoration-style: none;
-  text-decoration-color: none;
-}
-input[type="text"], input[type="color"] {
-  outline: none;
-  appearance: none;
-  background-color: transparent;
-  border-style: none;
-  font: inherit;
-  color: currentColor;
-  flex: 1 1 auto;
-  line-height: 20px;
-  padding: 8px;
-  max-width: 100%;
-  }
-  p {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-    margin-bottom: 15px;
-  }
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #555555;
-    background-size: cover;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #666666;
-    background-size: cover;
-  }
 
   `
 }

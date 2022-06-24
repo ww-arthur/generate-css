@@ -33,9 +33,9 @@ function computeColors(template, color, size, rounded) {
   let templates = {
     default: ` bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
      text-${color}-tint-8 text-light-hover background-${color}-tint-2-gradient-top-left background-${color}-shade-2`,
-    safe: ` bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
+    safe: `bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
      template:text-${color}-tint-8 text-light-hover template:background-${color}-shade-4-gradient-top-left template:background-${color}-shade-8`,
-    text: ` bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
+    text: `bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
      text-${color}-tint-3 text-${color}-hover `,
   }
   return `pa-${parseInt(size)} ro-${rounded} fs-${size} fw-5 ${

@@ -1,20 +1,22 @@
 <template>
-  <div class="a-slider" :class="`text-${color}-tint-3`">
+  <div
+    @pointerdown="teleportSlider"
+    class="a-slider canvas-hue py-2 ro-5"
+    :class="`text-${color}-tint-3`"
+  >
     <div
-      class="background-primary py-1 ro-5"
-      :style="` flex-basis: ${val.toFixed(2)}%; width: ${val.toFixed(2)}%`"
-    ></div>
-    <div class="fl-grow-1 py-1 ro-5 background-primary-tone-9"></div>
-    <div
-      @pointerdown="beginSliding"
+      @pointerdown.stop="beginSliding"
       @pointerup="stopSliding"
       :style="`left: ${val}%`"
       class="thumb-wrapper pa-3"
-      :class="`ro-circle background-primary-blend-10 background-primary-blend-8:hover`"
+      :class="`ro-circle background-black-blend-8:hover`"
     >
       <div
+        :style="`background-color: hsl(${percentageToValue(
+          val,
+        )}deg, 100%, 50%);`"
         class="thumb transition"
-        :class="`background-primary-tint-8 background-primary-tint-4-gradient-bottom-right bloom-4-black-blend-6 ro-5 pa-3`"
+        :class="`background-black-blend-9-gradient-bottom-right bloom-2-black-blend-4 ro-5 pa-3`"
       ></div>
     </div>
   </div>
@@ -33,7 +35,7 @@ const sliderProps = defineProps({
   },
   max: {
     type: [String, Number],
-    default: 100,
+    default: 360,
   },
   color: {
     type: String,
@@ -60,6 +62,13 @@ function stopSliding(event) {
   let slider = event.target
   slider.onpointermove = null
   slider.releasePointerCapture(event.pointerId)
+}
+function teleportSlider(event) {
+  let slider = event.target.firstChild
+  let rect = event.target.getBoundingClientRect()
+  updateModelValue(event, rect)
+  slider.onpointermove = (event) => updateModelValue(event, rect)
+  slider.setPointerCapture(event.pointerId)
 }
 
 let val = ref(valueToPercentage(sliderProps.modelValue))
@@ -109,6 +118,19 @@ function percentageToValue(percentage) {
 }
 </script>
 <style>
+.canvas-hue {
+  user-select: none;
+  background-image: linear-gradient(
+    to right,
+    #ff0000,
+    #ffff00,
+    #00ff00,
+    #00ffff,
+    #0000ff,
+    #ff00ff,
+    #ff0000
+  );
+}
 .a-slider {
   position: relative;
   display: flex;
@@ -118,8 +140,9 @@ function percentageToValue(percentage) {
 .thumb-wrapper {
   position: absolute;
   touch-action: none;
-  transition: transform, background-color 0.3s ease-out;
-  transform: translateX(-50%);
+  transition: transform 0.3s ease-out;
+  transform: translate(-50%, -50%);
+  top: 50%;
   display: flex;
   align-items: stretch;
   justify-content: stretch;

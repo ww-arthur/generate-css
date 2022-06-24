@@ -123,7 +123,7 @@ export function anyToHsla(color: String) {
     h,
     s,
     l,
-    a: colorObject.a,
+    a: colorObject.a || 1,
   }
   return hslColor
 }
@@ -166,9 +166,9 @@ export function hslaToHex(color: hslaObject) {
   r = Math.round((r + m) * 255)
   g = Math.round((g + m) * 255)
   b = Math.round((b + m) * 255)
-  return `#${decimal256ToHex(r)}${decimal256ToHex(g)}${decimal256ToHex(
-    b,
-  )}${decimal256ToHex(color.a * 255)}`
+  return `#${decimal256ToHex(r)}${decimal256ToHex(g)}${decimal256ToHex(b)}${
+    color.a === 1 || isNaN(color.a) ? '' : decimal256ToHex(color.a * 255)
+  }`
 }
 
 export function generateColorValues(color: ColorValue) {

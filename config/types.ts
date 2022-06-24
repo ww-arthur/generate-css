@@ -8,7 +8,7 @@ export interface hslaObject {
   h: number
   s: number
   l: number
-  a: number
+  a?: number
 }
 export interface ColorValueOptions {
   tints?: number

@@ -1,14 +1,25 @@
 import { ColorValue } from './types'
 let colors: Array<ColorValue> = [
   { name: 'primary', hash: '#8f00ff' },
-  { name: 'black', hash: '#000000', options: { shades: 0, tones: 0 } },
-  { name: 'white', hash: '#ffffff', options: { tints: 0, tones: 0 } },
+  { name: 'secondary', hash: '#41EAD4' },
+  { name: 'tertiary', hash: '#FF9F1C' },
+
+  {
+    name: 'black',
+    hash: '#000000',
+    options: { tints: 15, shades: 0, tones: 0 },
+  },
+  {
+    name: 'white',
+    hash: '#ffffff',
+    options: { shades: 15, tints: 0, tones: 0 },
+  },
 ]
 let config = {
   colors,
   themes: ['default', 'dark'],
   spacers: {
-    iterations: 11,
+    iterations: 20,
     unit: 'px',
     multiplier: 4,
   },
