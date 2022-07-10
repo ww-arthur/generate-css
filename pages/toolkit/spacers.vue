@@ -81,7 +81,7 @@ watch(
   () => {
     generateStyle()
   },
-  { deep: true },
+  { deep: true, immediate: true },
 )
 function generateStyle() {
   const utilities = {

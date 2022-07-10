@@ -159,11 +159,11 @@ const borderRadiusCols = computed(() =>
 )
 
 watch(
-  () => config,
+  config,
   () => {
     generateStyle()
   },
-  { deep: true },
+  { deep: true, immediate: true },
 )
 function generateStyle() {
   const utilities = {

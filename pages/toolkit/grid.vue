@@ -57,7 +57,7 @@ watch(
   () => {
     generateStyle()
   },
-  { deep: true },
+  { deep: true, immediate: true },
 )
 function generateStyle() {
   let prefixedClasses = generateColClasses(config.value.cols).map(
