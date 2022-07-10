@@ -3,6 +3,7 @@ import { defineNuxtPlugin } from '#app'
 export default defineNuxtPlugin((nuxtApp) => {
   let ripple = {
     mounted(el: HTMLElement, binding: object) {
+      el.style.cursor = 'pointer'
       const container = document.createElement('span')
       container.classList.add('a-ripple-container')
       const circle = document.createElement('span')

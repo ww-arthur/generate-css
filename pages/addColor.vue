@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div
-      class="col-12 md:col-9 ov-auto row background-black-tint-1 bloom-4-black-blend-6 elevated md:ro-right-5 my-10"
+      class="col-12 md:col-9 ov-auto row background-grey-tint-1 bloom-4-grey-blend-6 elevated md:ro-right-5 my-10"
     >
       <div
         class="col-1 background-primary bloom-4-primary-blend-6"
@@ -24,7 +24,7 @@
                 class="color-hover te-center"
                 :class="
                   parseInt(hash.slice(1, 7), 16) > 10230527
-                    ? 'text-black'
+                    ? 'text-grey'
                     : 'text-white'
                 "
               >
@@ -99,9 +99,9 @@
     <div class="col-12 md:col-3 di-flex fl-column ov-hidden">
       <div class="oy-auto ox-hidden fl-grow-1">
         <div class="pt-10 px-5">
-          <div class="fs-8 template:text-primary-tint-9">Pick a color</div>
+          <div class="fs-8 template:text-primary-tint-9">Edit color</div>
           <div class="fs-5 pb-10 template:text-primary-tint-8">
-            Generate a color scheme from a color
+            Generate a color scheme from a color.
           </div>
         </div>
 
@@ -109,6 +109,7 @@
           <a-input v-model="color.name" label="Name"></a-input>
           <div class="di-flex ai-center">
             <a-input
+              @update:model-value="generateColors()"
               v-model="color.hash"
               label="Color"
               class="fl-grow-1"
@@ -234,7 +235,7 @@
           </a-row>
 
           <div class="di-flex fl-column ai-stretch mt-10">
-            <p class="fw-2 fs-4 text-white-shade-2">
+            <p class="fw-2 fs-4 text-grey-shade-2">
               We've generated a stilesheet for the color you've picked.
               <br />
 
@@ -325,7 +326,7 @@ function downloadStyle() {
   }) */
 }
 </script>
-<style>
+<style scoped>
 .color-wrapper {
   height: 80px;
   max-height: 80px;

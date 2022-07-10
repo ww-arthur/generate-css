@@ -1,5 +1,5 @@
 import variables from './variables'
-export function generateUtilityObject(
+export function generateUtilityValues(
   iterations: number,
   unit = '',
   multiplier = 1,
@@ -37,6 +37,60 @@ export function useUtilities(options = variables) {
     po: {
       properties: ['position'],
       values: ['static', 'relative', 'fixed', 'absolute', 'sticky'],
+    },
+    to: {
+      properties: ['top'],
+      values: {
+        '0': '0',
+        '25': '25%',
+        '50': '50%',
+        '75': '75%',
+        '100': '100%',
+      },
+    },
+    le: {
+      properties: ['left'],
+      values: {
+        default: '0',
+        '25': '25%',
+        '50': '50%',
+        '75': '75%',
+        '100': '100%',
+      },
+    },
+    bo: {
+      properties: ['bottom'],
+      values: {
+        '0': '0',
+        '25': '25%',
+        '50': '50%',
+        '75': '75%',
+        '100': '100%',
+      },
+    },
+    ri: {
+      properties: ['right'],
+      values: {
+        '0': '0',
+        '25': '25%',
+        '50': '50%',
+        '75': '75%',
+        '100': '100%',
+      },
+    },
+
+    tr: {
+      properties: ['transform'],
+      values: {
+        'translate-center': 'translate(-50%, -50%)',
+        'rotate-45': 'rotate(45deg)',
+        'rotate-90': 'rotate(90deg)',
+        'rotate-180': 'rotate(180deg)',
+        'rotate-270': 'rotate(270deg)',
+        'scale-0': 'scale(0)',
+        'scale-1': 'scale(1)',
+        'scale-1-5': 'scale(1.5)',
+      },
     },
     he: {
       properties: {
@@ -167,14 +221,13 @@ export function useUtilities(options = variables) {
       },
       values: options.borderRadius,
     },
-    b: {
-      removeDivider: true,
+    bw: {
       properties: {
-        o: ['border-width'],
-        t: ['border-top-width'],
-        r: ['border-right-width'],
-        b: ['border-bottom-width'],
-        l: ['border-left-width'],
+        default: ['border-width'],
+        top: ['border-top-width'],
+        right: ['border-right-width'],
+        bottom: ['border-bottom-width'],
+        left: ['border-left-width'],
       },
       values: options.borderWidths,
     },
@@ -210,11 +263,7 @@ export function useUtilities(options = variables) {
         },
       },
     ],
-    'text-decoration': {
-      properties: ['text-decoration'],
-      values: ['line-through', 'none', 'overline', 'underline'],
-    },
-    'background-clip': {
+    bc: {
       properties: ['background-clip'],
       values: ['border-box', 'padding-box', 'content-box', 'text'],
     },
@@ -225,6 +274,24 @@ export function useUtilities(options = variables) {
     fw: {
       properties: ['font-weight'],
       values: options.fontWeights,
+    },
+
+    'text-decoration': {
+      properties: ['text-decoration'],
+      values: ['line-through', 'none', 'overline', 'underline'],
+    },
+    cursor: {
+      properties: ['cursor'],
+      values: [
+        'none',
+        'default',
+        'pointer',
+        'progress',
+        'wait',
+        'not-allowed',
+        'n-resize',
+        'e-resize',
+      ],
     },
   }
 }

@@ -27,7 +27,7 @@ body {
 }
 
 button {
-  font-family: "${options.fontName}", sans-serif;
+  font-family: inherit;
   font-style: normal;
   font-weight: 400;
   background-color: transparent;
@@ -39,7 +39,7 @@ button {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-
-
-  `
+input {
+  text-align: inherit;
+} `
 }

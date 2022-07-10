@@ -8,7 +8,7 @@
     >
       <template #0>
         <div
-          class="col-12 pa-10 ma-10 bloom-3-black-blend-5 background-black-tint-1 elevated ro-5"
+          class="col-12 pa-10 ma-10 bloom-3-grey-blend-5 background-grey-tint-1 elevated ro-5"
         >
           <main-saturation-lightness-picker
             :color-hue="colorHue"
@@ -25,11 +25,11 @@
       </template>
       <template #1>
         <div
-          class="wi-100 ma-10 md:wi-75 ar-1 te-uppercase ro-5 di-flex jc-center ai-center fs-7 elevated bloom-3-black-blend-5"
+          class="wi-100 ma-10 md:wi-75 ar-1 te-uppercase ro-5 di-flex jc-center ai-center fs-7 elevated bloom-3-grey-blend-5"
           :class="
             parseInt(colorHex.slice(1, 7), 16) > 10230527
-              ? 'text-black'
-              : 'text-white'
+              ? 'text-grey-shade-15'
+              : 'text-grey-tint-15'
           "
           :style="`background-color: ${colorHex};`"
         >

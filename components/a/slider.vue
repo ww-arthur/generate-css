@@ -1,22 +1,41 @@
 <template>
-  <div class="a-slider" :class="`text-${color}-tint-3`">
+  <div class="a-slider-wrapper">
+    <slot name="label">
+      <div class="mr-6">
+        {{ label }}
+      </div>
+    </slot>
+
     <div
-      class="background-primary py-1 ro-5"
-      :style="` flex-basis: ${val.toFixed(2)}%; width: ${val.toFixed(2)}%`"
-    ></div>
-    <div class="fl-grow-1 py-1 ro-5 background-primary-tone-9"></div>
-    <div
-      @pointerdown="beginSliding"
-      @pointerup="stopSliding"
-      :style="`left: ${val}%`"
-      class="thumb-wrapper pa-3"
-      :class="`ro-circle background-primary-blend-10 background-primary-blend-8:hover`"
+      @pointerdown="teleportSlider"
+      class="a-slider"
+      :class="`text-${color}-shade-5 `"
     >
       <div
-        class="thumb transition"
-        :class="`background-primary-tint-8 background-primary-tint-4-gradient-bottom-right bloom-4-black-blend-6 ro-5 pa-3`"
+        :class="`background-${color}`"
+        class="a-slider-range py-1 ro-5"
+        :style="` flex-basis: ${val.toFixed(2)}%; width: ${val.toFixed(2)}%`"
       ></div>
+      <div
+        :class="` background-${color}-tone-9`"
+        class="a-slider-range fl-grow-1 py-1 ro-5"
+      ></div>
+      <div
+        @pointerdown.stop="beginSliding"
+        @pointerup="stopSliding"
+        :style="`left: ${val}%`"
+        class="thumb-wrapper pa-3"
+        :class="`ro-pill ar-1 background-${color}-blend-10 background-${color}-blend-8:hover`"
+      >
+        <div
+          :class="`background-${color}-tint-8 background-${color}-tint-4-gradient-bottom-right `"
+          class="thumb transition bloom-1-grey-shade-9 ro-5 px-3 fs-3 fw-6 di-flex ai-center"
+        >
+          <slot></slot>
+        </div>
+      </div>
     </div>
+    <slot name="end"></slot>
   </div>
 </template>
 <script setup lang="ts">
@@ -25,15 +44,19 @@ const emit = defineEmits(['update:modelValue'])
 const sliderProps = defineProps({
   modelValue: {
     type: [Number, String],
-    default: '',
+    default: 0,
   },
   min: {
-    type: [String, Number],
+    type: [Number, String],
     default: 0,
   },
   max: {
     type: [String, Number],
     default: 100,
+  },
+  step: {
+    type: [String, Number],
+    default: 1,
   },
   color: {
     type: String,
@@ -53,6 +76,13 @@ const sliderProps = defineProps({
 function beginSliding(event) {
   let slider = event.target
   let rect = event.target.parentElement.getBoundingClientRect()
+  slider.onpointermove = (event) => updateModelValue(event, rect)
+  slider.setPointerCapture(event.pointerId)
+}
+function teleportSlider(event) {
+  let slider = event.target.lastChild
+  let rect = event.target.getBoundingClientRect()
+  updateModelValue(event, rect)
   slider.onpointermove = (event) => updateModelValue(event, rect)
   slider.setPointerCapture(event.pointerId)
 }
@@ -84,7 +114,12 @@ function updateModelValue(event, rect) {
       val.value !== sliderProps.modelValue &&
         emit('update:modelValue', sliderProps.max)
     } else {
-      val.value = position * 100
+      val.value =
+        roundToStep(
+          position,
+          (sliderProps.step as number) /
+            ((sliderProps.max as number) - (sliderProps.min as number)),
+        ) * 100
       emit('update:modelValue', percentageToValue(val.value))
     }
     ticking = false
@@ -100,26 +135,41 @@ function valueToPercentage(value) {
   )
 }
 function percentageToValue(percentage) {
-  return (
+  return roundToStep(
     (parseInt(sliderProps.max as string) -
       parseInt(sliderProps.min as string)) *
       (percentage * 0.01) +
-    parseInt(sliderProps.min as string)
+      parseInt(sliderProps.min as string),
+    sliderProps.step as number,
   )
+}
+function roundToStep(number: number, mult: number) {
+  return Math.round(number / mult) * mult
 }
 </script>
 <style>
+.a-slider-wrapper {
+  display: flex;
+}
+.a-slider-range {
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
+}
 .a-slider {
   position: relative;
   display: flex;
+  flex-grow: 1;
   align-items: center;
   overflow: visible;
 }
 .thumb-wrapper {
+  user-select: none;
   position: absolute;
   touch-action: none;
   transition: transform, background-color 0.3s ease-out;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: stretch;
   justify-content: stretch;

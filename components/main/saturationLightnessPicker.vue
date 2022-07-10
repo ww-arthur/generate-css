@@ -16,7 +16,7 @@
           (val.l as number * 100)
         }%);`"
         class="thumb border-white"
-        :class="`background-black-blend-9-gradient-bottom-right bloom-1-black-blend-6 ro-5 pa-3 `"
+        :class="`background-grey-blend-9-gradient-bottom-right bloom-1-grey-blend-6 ro-5 pa-3 `"
       ></div>
     </div>
     <div v-if="showMarker" class="marker thumb"></div>

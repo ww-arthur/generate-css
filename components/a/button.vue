@@ -1,14 +1,16 @@
 <template>
-  <button
+  <component
+    :is="to ? 'RouterLink' : 'button'"
     class="a-button elevated"
     v-ripple
     @click.prevent
+    :disabled="disabled"
     :class="computedClasses"
   >
     <div class="a-button-content">
       <slot></slot>
     </div>
-  </button>
+  </component>
 </template>
 <script setup>
 const props = defineProps({
@@ -20,6 +22,10 @@ const props = defineProps({
     type: [String, Number],
     default: '5',
   },
+  to: {
+    type: [String, Object],
+    defaul: '',
+  },
   size: {
     type: [String, Number],
     default: '3',
@@ -28,15 +34,28 @@ const props = defineProps({
     type: String,
     default: 'default',
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 function computeColors(template, color, size, rounded) {
   let templates = {
-    default: ` bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
-     text-${color}-tint-8 text-light-hover background-${color}-tint-2-gradient-top-left background-${color}-shade-2`,
-    safe: `bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
-     template:text-${color}-tint-8 text-light-hover template:background-${color}-shade-4-gradient-top-left template:background-${color}-shade-8`,
-    text: `bloom-1-black-blend-7 bloom-2-black-blend-4:hover bloom-0-black:active 
-     text-${color}-tint-3 text-${color}-hover `,
+    default: `bloom-1-grey-blend-7 bloom-2-grey-blend-4:hover bloom-0-grey:active 
+     text-${color}-shade-8 text-grey-shade-14:hover
+     background-${color}-gradient-top-left background-${color}-tint-5
+     dark:bloom-1-grey-shade-14 dark:bloom-2-grey-shade-14:hover dark:bloom-0-grey:active 
+     dark:text-${color}-tint-8 dark:text-${color}-tint-9:hover 
+     dark:background-${color}-gradient-top-left dark:background-${color}-shade-5     `,
+    glassy: `bloom-1-grey-blend-7 bloom-2-grey-blend-4:hover bloom-0-grey:active 
+     text-${color}-shade-8 text-${color}-shade-9:hover 
+     background-${color}-blend-7-gradient-top-left background-${color}-blend-9
+     dark:bloom-1-grey-shade-14 dark:bloom-2-grey-shade-14:hover dark:bloom-0-grey:active
+     dark:text-${color}-tint-8 dark:text-${color}-tint-9:hover`,
+    text: ` bloom-0-grey:active 
+     text-${color}-shade-3 text-${color}-shade-2-hover
+      dark:bloom-2-grey-shade-14:hover dark:bloom-0-grey:active
+     dark:text-${color}-tint-3 dark:text-${color}-tint-2-hover`,
   }
   return `pa-${parseInt(size)} ro-${rounded} fs-${size} fw-5 ${
     templates[template]
@@ -54,14 +73,16 @@ const computedClasses = computed(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.25s ease-in;
+  transition: all 0.15s ease-in;
 }
 .a-button:hover {
-  transform: translate3d(0, -2px, 0);
+  transform: translate3d(0, -1px, 0);
+}
+.a-button:disabled {
+  pointer-events: none;
+  color: grey !important;
 }
 .a-button:active {
-  transition: all 0.15s ease-out;
-
   transform: translate3d(0, 0, 0);
 }
 .a-button-content {

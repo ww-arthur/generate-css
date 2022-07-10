@@ -1,45 +1,55 @@
 <template>
-  <a-div
-    v-bind="$attrs"
-    class="item po-relative ov-hidden row ai-center jc-space-between px-2 py-3 fl-wrap"
-    :class="`background-${color}-alpha-9-hover bloom-2-${color}-alpha-7-hover`"
+  <NuxtLink
+    :to="toRoute.href"
+    class="item transition dark:text-primary-tint-9 text-primary-shade-9 po-relative ov-hidden row ai-center jc-center md:px-2 py-2"
+    :class="`${
+      isActive
+        ? 'background-primary-tint-5 dark:background-primary-shade-5 '
+        : ''
+    }`"
   >
-    <a-div class="di-flex ai-center jc-center pa-1 mx-2 ar-1">
+    <div
+      v-if="icon || $slots.icon"
+      class="di-flex ai-center jc-center md:pa-1 mx-2 ar-1"
+    >
       <slot name="icon" :attrs="iconAttrs">
         <a-icon v-if="icon" v-bind="iconAttrs">
           {{ icon }}
         </a-icon>
       </slot>
-    </a-div>
-    <div class="po-relative fl-grow-1 te-left">
-      <div class="fs-1 po-absolute mt-n3 opacity-8">
+    </div>
+    <div
+      :class="hideTextMobile ? 'di-none sm:di-block' : ''"
+      class="po-relative fl-grow-1 te-left"
+    >
+      <small
+        class="di-block po-absolute opacity-8 mt-3 fw-3"
+        style="transform: translateY(-100%); top: 0;"
+      >
         <slot name="label">
           {{ label }}
         </slot>
-      </div>
-      <div class="fs-4">
+      </small>
+      <div class="fs-3 sm:fs-4 md:fs-5">
         <slot>
           {{ text }}
         </slot>
       </div>
     </div>
-    <slot name="end"></slot>
-  </a-div>
+    <small>
+      <slot name="end"></slot>
+    </small>
+  </NuxtLink>
 </template>
 <script setup>
-const darkMode = useState('darkMode')
 const props = defineProps({
-  light: {
-    type: [String, Object, Array],
-    default: '',
-  },
-  dark: {
-    type: [String, Object, Array],
-    default: '',
-  },
   color: {
     type: String,
-    default: 'grey',
+    default: 'white',
+  },
+  hideTextMobile: {
+    type: Boolean,
+    default: false,
   },
   icon: {
     type: String,
@@ -53,34 +63,37 @@ const props = defineProps({
     type: String,
     default: '',
   },
+
   text: {
     type: String,
     default: '',
   },
+  to: {
+    type: [String, Object],
+    defaul: '',
+  },
+  active: {
+    type: Boolean,
+    default: false,
+  },
 })
-</script>
-<script>
-export default {
-  data() {
-    return {
-      iconAttrs: {
-        size: this.iconSize,
-        color: this.color,
-        light: `${this.color}-shade-4`,
-        dark: `${this.color}-tint-4`,
-      },
-    }
-  },
-  computed: {
-    computedClasses() {
-      return this.darkMode ? this.dark : this.light
-    },
-  },
+const route = useRoute()
+const router = useRouter()
+let toRoute = computed(() => {
+  return props.to ? router.resolve(props.to) : {}
+})
+let tag = computed(() => {
+  return props.to ? 'nuxt-link' : 'div'
+})
+let isActive = computed(() => {
+  return (
+    props.active ||
+    toRoute.value.name?.split('-').every((name) => route.name?.includes(name))
+  )
+})
 
-}
+let iconAttrs = computed(() => ({
+  size: props.iconSize,
+  color: props.color,
+}))
 </script>
-<style lang="scss" scoped>
-.item {
-  transition: background 0.25s ease-in;
-}
-</style>

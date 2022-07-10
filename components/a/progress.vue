@@ -23,7 +23,7 @@ const props = defineProps({
   },
   progressColor: {
     type: String,
-    default: 'purple',
+    default: 'primary',
   },
   rounded: {
     type: [String, Number],

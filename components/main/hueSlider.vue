@@ -1,22 +1,18 @@
 <template>
-  <div
-    @pointerdown="teleportSlider"
-    class="a-slider canvas-hue py-2 ro-5"
-    :class="`text-${color}-tint-3`"
-  >
+  <div @pointerdown="teleportSlider" class="a-slider canvas-hue py-2 ro-5">
     <div
       @pointerdown.stop="beginSliding"
       @pointerup="stopSliding"
       :style="`left: ${val}%`"
       class="thumb-wrapper pa-3"
-      :class="`ro-circle background-black-blend-8:hover`"
+      :class="`ro-circle background-grey-blend-8:hover`"
     >
       <div
         :style="`background-color: hsl(${percentageToValue(
           val,
         )}deg, 100%, 50%);`"
         class="thumb transition"
-        :class="`background-black-blend-9-gradient-bottom-right bloom-2-black-blend-4 ro-5 pa-3`"
+        :class="`background-grey-blend-9-gradient-bottom-right bloom-2-grey-blend-4 ro-5 pa-3`"
       ></div>
     </div>
   </div>

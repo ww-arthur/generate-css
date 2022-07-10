@@ -1,29 +1,30 @@
 import config from './config'
-import { generateUtilityObject } from './utilities'
+import { generateUtilityValues } from './utilities'
 let variables = {
   ...config,
   ...{
-    spacers: generateUtilityObject?.(
-      config.spacers.iterations,
+    spacers: generateUtilityValues?.(
+      config.spacers.iterations + 1,
       config.spacers.unit,
       config.spacers.multiplier,
     ),
-    negativeSpacers: generateUtilityObject?.(
-      config.spacers.iterations,
+    negativeSpacers: generateUtilityValues?.(
+      config.spacers.iterations + 1,
       config.spacers.unit,
       -config.spacers.multiplier,
       'n',
     ),
-    fontWeights: generateUtilityObject?.(
+    fontWeights: generateUtilityValues?.(
       config.fontWeights.iterations,
       config.fontWeights.unit,
       config.fontWeights.multiplier,
       '',
       1,
     ),
-    borderWidths: generateUtilityObject?.(
-      config.borderWidths.iterations,
+    borderWidths: generateUtilityValues?.(
+      config.borderWidths.iterations + 1,
       config.borderWidths.unit,
+      config.borderWidths.multiplier,
     ),
   },
 }

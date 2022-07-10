@@ -1,8 +1,9 @@
 <template>
   <svg
-    v-show="actualSize"
+    v-if="actualSize"
     class="icon ov-visible"
     version="1.1"
+    :style="`width: ${actualSize}`"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 24 24"
@@ -10,8 +11,7 @@
   >
     <g>
       <path
-        :class="`sw-${strokeWidth} stroke-${strokeColor} background-${color}`"
-        :d="iconPath"
+        :class="`transition sw-${strokeWidth} stroke-${strokeColor} background-${color}`"
       />
     </g>
   </svg>
@@ -42,20 +42,20 @@ const props = defineProps({
   },
   size: {
     type: [String, Number],
-    default: 3,
+    default: 5,
   },
 })
 let actualSize = computed(() =>
-  isNaN(props.size) ? props.size : parseInt(props.size) * 4 * 2 + 'px',
+  isNaN(props.size) ? props.size : parseInt(props.size) * 4 + 'px ',
 )
 </script>
 <script>
 export default {
   computed: {
     iconPath() {
-      return `${this.$icon.get(
+      return `path("${this.$icon.get(
         this.$slots.default?.()?.[0]?.children ?? this.icon,
-      )}`
+      )}")`
     },
     fillOpacity() {
       return this.outline ? 0 : 1
@@ -72,8 +72,11 @@ export default {
   aspect-ratio: 1;
   stroke-linecap: round;
   fill-opacity: v-bind(fillOpacity);
-  /* width: v-bind(actualSize) !important; */
-  width: 24px;
+
   height: auto;
+}
+.icon path {
+  transition: 0.2s;
+  d: v-bind(iconPath);
 }
 </style>

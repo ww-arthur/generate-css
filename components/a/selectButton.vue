@@ -3,9 +3,9 @@
     <a-button
       class="wi-min-100 he-min-100"
       @click="focus()"
-      :rounded="rounded"
+      :rounded="buttonRounded"
       :color="color"
-      template="gradient"
+      :template="template"
     >
       <div class="di-flex jc-space-between wi-100 ai-center">
         <slot v-if="selected.text || selected.value" :selected="selected">
@@ -24,15 +24,11 @@
         </a-icon>
       </div>
     </a-button>
-    <transition @enter="onEnter" @leave="onLeave" :css="false">
+    <a-transition-grow-y>
       <div
         v-show="isFocused"
         class="a-select-items"
-        :class="`ro-${rounded} ${
-          darkMode
-            ? `background-${color}-shade-9`
-            : `background-${color}-tint-9`
-        }`"
+        :class="`ro-${rounded} background-${color}-shade-9`"
       >
         <div
           class="po-relative ov-hidden"
@@ -53,7 +49,7 @@
           </slot>
         </div>
       </div>
-    </transition>
+    </a-transition-grow-y>
   </div>
 </template>
 <script setup>
@@ -65,7 +61,7 @@ const props = defineProps({
   },
   color: {
     type: String,
-    default: 'purple',
+    default: 'primary',
   },
   mode: {
     type: String,
@@ -74,6 +70,14 @@ const props = defineProps({
   rounded: {
     type: String,
     default: '5',
+  },
+  buttonRounded: {
+    type: String,
+    default: '5',
+  },
+  template: {
+    type: String,
+    default: 'default',
   },
 
   items: {
@@ -95,7 +99,7 @@ export default {
     }
   },
   methods: {
-    onEnter(el, done) {
+    /*     onEnter(el, done) {
       this.$anime({
         targets: el,
         duration: 400,
@@ -114,7 +118,7 @@ export default {
         rotateX: ['0deg', '-90deg'],
         complete: done,
       })
-    },
+    }, */
     focus() {
       this.isFocused = !this.isFocused
     },
@@ -139,52 +143,26 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style>
 .a-select-box {
   position: relative;
   perspective-origin: 50% 50%;
   perspective: 300px;
   transform-style: preserve-3d;
-  input {
-    z-index: 1;
-  }
-  .a-select-items {
-    cursor: pointer;
-    position: absolute;
-    flex-direction: column;
-    min-width: 100%;
-    z-index: -1;
-    transform-origin: top center;
-    top: calc(100% - 24px);
-    padding-top: 24px;
-    padding-bottom: 8px;
-  }
+  z-index: 10;
 }
-.select-scroll-enter-active {
-  animation: bounce-in 0.2s ease-out;
+.a-select-box input {
+  z-index: 1;
 }
-.select-scroll-leave-active {
-  animation: bounce-in 0.2s ease-out reverse;
-}
-.select-scroll-enter-to {
-  transform: translate(0, 100%);
-}
-.select-scroll-enter-from,
-.select-scroll-leave-to {
-  transform: translate(0, 80%);
-  opacity: 0;
+.a-select-items {
+  cursor: pointer;
+  position: absolute;
+  flex-direction: column;
+  min-width: 100%;
   z-index: -1;
-}
-
-@keyframes bounce-in {
-  0% {
-    transform: translate(0, 80%);
-    opacity: 0;
-  }
-
-  100% {
-    transform: translate(0, 100%);
-    opacity: 1;
-  }
+  transform-origin: top center;
+  top: calc(100% - 24px);
+  padding-top: 24px;
+  padding-bottom: 8px;
 }
 </style>

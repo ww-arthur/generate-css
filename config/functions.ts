@@ -1,8 +1,8 @@
 import { generateColorValues, generateColorGradients } from './colors'
 import variables from './variables'
-import { useUtilities } from './utilities'
+import { generateUtilityValues, useUtilities } from './utilities'
 import { useDefault } from './default'
-import { UtilityObject, ColorValue } from './types'
+import { UtilityValues, UtilityObject, ColorValue } from './types'
 export function addProperty(
   property: string,
   value: string | number,
@@ -57,6 +57,15 @@ export function generateGoogleFontsLink(
     italic ? 'ital,' : ''
   }wght@${options}&display=swap`
 }
+export function getCssFontWeights(css: string) {
+  let utilityValues = []
+  for (let weight = 1; weight < 9; weight += 1) {
+    if (css.includes(`font-weight: ${weight * 100};`)) {
+      utilityValues.push([weight, weight * 100])
+    }
+  }
+  return Object.fromEntries(utilityValues) as UtilityValues
+}
 
 export function generateUtilityClasses(utilitiesObject: object) {
   let style = []
@@ -85,8 +94,12 @@ export function generateUtilityClasses(utilitiesObject: object) {
           // Values: Object
           for (var [key, value] of Object.entries(utilities.values)) {
             content = ''
-            for (property of utilities.properties) {
-              content += addProperty(property, value)
+            for (var [i, property] of utilities.properties.entries()) {
+              if (Array.isArray(value)) {
+                content += addProperty(property, value[i])
+              } else {
+                content += addProperty(property, value)
+              }
             }
             classes.push([`${prefix}${key}`, content])
           }
@@ -152,7 +165,10 @@ export function generateColorClasses(
       classes.push([`text-${key}`, `color: ${value} !important;`])
     }
     if (options.border) {
-      classes.push([`border-${key}`, `border-color: ${value} !important;`])
+      classes.push([
+        `border-${key}`,
+        `border-color: ${value} !important; border-style: solid; border-width: 0px;`,
+      ])
     }
   }
   return classes
@@ -173,7 +189,7 @@ export function generateBloomClasses(colorValues: Object, iterations: number) {
     for (var [key, value] of Object.entries(colorValues)) {
       classes.push([
         `bloom-${i}-${key}`,
-        `filter: drop-shadow(0px ${i * 2}px ${Math.round(
+        `filter: drop-shadow(0px ${Math.round(i * 1.4)}px ${Math.round(
           i * i * 0.5,
         )}px  ${value})`,
       ])
@@ -197,7 +213,10 @@ export function generateColClasses(iterations: number) {
     content = ''
     content += addProperty('flex', `0 0 ${calculatePercentage(i / iterations)}`)
     content += addProperty('width', `${calculatePercentage(i / iterations)}`)
-    content += addProperty('max-width', `100%`)
+    content += addProperty(
+      'max-width',
+      `${calculatePercentage(i / iterations)}`,
+    )
     classes.push([`col-${i}`, content])
   }
   return classes
@@ -214,20 +233,35 @@ export async function generateStyle(options = variables) {
         Object.values(options.fontWeights),
       ),
     )
-    css += await res.text()
 
+    const fontFaces = await res.text()
+    css += fontFaces
+    options.fontWeights = getCssFontWeights(fontFaces)
     //Colors
     for (var theme of options.themes) {
-      let themeClasses = []
+      let colorClasses = []
+      let opacityClasses = []
       for (var color of options.colors) {
-        themeClasses.push(...generateColorScheme(color))
+        colorClasses.push(...generateColorScheme(color))
       }
       let selectorClasses = []
       for (var [sName, sSelector] of Object.entries(options.selectors)) {
         selectorClasses.push(
-          ...suffixClasses(themeClasses, `${sName}${sSelector}`),
+          ...suffixClasses(colorClasses, `${sName}${sSelector}`),
+        )
+        opacityClasses.push(
+          ...suffixClasses(
+            generateUtilityClasses({
+              opacity: {
+                properties: ['opacity'],
+                values: generateUtilityValues(10, '', 0.1),
+              },
+            }),
+            `${sName}${sSelector}`,
+          ),
         )
       }
+      classes.push(...opacityClasses)
       classes.push(...prefixClasses(selectorClasses, `${theme} .${theme}`))
     }
     css += generateClasses(classes)

@@ -1,18 +1,14 @@
 import { ColorValue } from './types'
 let colors: Array<ColorValue> = [
-  { name: 'primary', hash: '#8f00ff' },
-  { name: 'secondary', hash: '#41EAD4' },
-  { name: 'tertiary', hash: '#FF9F1C' },
+  { name: 'orange', hash: '#dc793d ' },
+  { name: 'yellow', hash: '#ffeb3b ' },
+  { name: 'red', hash: '#dd2c00 ' },
+  { name: 'green', hash: '#4caf50 ' },
 
   {
-    name: 'black',
-    hash: '#000000',
-    options: { tints: 15, shades: 0, tones: 0 },
-  },
-  {
-    name: 'white',
-    hash: '#ffffff',
-    options: { shades: 15, tints: 0, tones: 0 },
+    name: 'grey',
+    hash: '#808080',
+    options: { tints: 15, shades: 15, tones: 0 },
   },
 ]
 let config = {
@@ -65,6 +61,7 @@ let config = {
   borderWidths: {
     iterations: 4,
     unit: 'px',
+    multiplier: 1,
   },
   gridBreakpoints: {
     default: '0px',

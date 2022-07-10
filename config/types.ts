@@ -24,3 +24,6 @@ export interface ColorValue {
 export type UtilityObject = {
   [key: string]: { properties: any; values: any } | object
 }
+export type UtilityValues = {
+  [key: string]: string | number
+}
