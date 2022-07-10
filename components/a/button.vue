@@ -1,6 +1,7 @@
 <template>
   <component
-    :is="to ? 'RouterLink' : 'button'"
+    :is="to ? 'router-link' : 'button'"
+    :to="to"
     class="a-button elevated"
     v-ripple
     @click.prevent

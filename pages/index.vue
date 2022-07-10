@@ -56,20 +56,30 @@
               gutter="4"
             >
               <template #2>
-                <a-button class="wi-100" color="primary" template="text">
+                <a-button
+                  to="/docs/utilities"
+                  class="wi-100"
+                  color="primary"
+                  template="text"
+                >
                   <a-icon class="mr-2">file-document</a-icon>
                   <span>Documentation</span>
                 </a-button>
               </template>
               <template #1>
-                <a-button class="wi-100" color="primary">
+                <a-button to="/guide" class="wi-100" color="primary">
                   <a-icon class="mr-2">play</a-icon>
                   <span>Get started</span>
                 </a-button>
               </template>
 
               <template #0>
-                <a-button class="wi-100" color="primary" template="glassy">
+                <a-button
+                  class="wi-100"
+                  to="/toolkit/font"
+                  color="primary"
+                  template="glassy"
+                >
                   <a-icon>water-plus</a-icon>
                   <span>Create toolkit</span>
                 </a-button>
