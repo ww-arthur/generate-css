@@ -1,11 +1,11 @@
 <template>
-  <teleport to="body">
+  <teleport to=".a-app-overlay">
     <a-transition-enter-y>
       <div
         v-if="modelValue"
         :class="`template`"
         style="z-index: 10;"
-        class="po-fixed dark:text-grey-tint-14 text-grey-shade-14 dark:background-grey-shade-14 background-grey-tint-14 wi-min-100vw he-min-100vh wi-max-100vw he-max-100vh ov-auto py-10 di-flex ai-stretch jc-center"
+        class="po-fixed to-default dark:text-grey-tint-14 text-grey-shade-14 dark:background-grey-shade-14 background-grey-tint-14 wi-min-100vw he-min-100vh wi-max-100vw he-max-100vh ov-auto py-10 di-flex ai-stretch jc-center"
       >
         <main-layout>
           <template #card>

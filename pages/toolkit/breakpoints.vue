@@ -68,6 +68,16 @@
           </a-button>
         </div>
       </div>
+      <a-button
+        @click="addBreakpoint()"
+        template="text"
+        rounded="3"
+        class="wi-100"
+        size="1"
+      >
+        <a-icon size="2" class="mr-1">plus</a-icon>
+        Add breakpoint
+      </a-button>
     </template>
   </main-layout>
 </template>
@@ -90,6 +100,9 @@ let breakpoints = ref(
 function deleteBreakpoint(index: number) {
   breakpoints.value.splice(index, 1)
 }
+function addBreakpoint() {
+  breakpoints.value.push({ key: '', value: '0' })
+}
 const sortedBreakpoints = computed(() => {
   return [...breakpoints.value].sort((a, b) => {
     if (parseInt(a.value) > parseInt(b.value)) {
@@ -105,9 +118,13 @@ watch(
   () => breakpoints,
   () => {
     config.value.gridBreakpoints = Object.fromEntries(
-      sortedBreakpoints.value.map((b) => [b.key, b.value + 'px']),
+      sortedBreakpoints.value
+        .filter((b) => b.key)
+        .map((b) => [b.key, b.value + 'px']),
     )
-    generateStyle()
+    if (process.client) {
+      generateStyle()
+    }
   },
   { deep: true, immediate: true },
 )
