@@ -81,7 +81,8 @@ const computedClasses = computed(() => {
 }
 .a-button:disabled {
   pointer-events: none;
-  color: grey !important;
+  filter: grayscale(70%);
+  box-shadow: none;
 }
 .a-button:active {
   transform: translate3d(0, 0, 0);

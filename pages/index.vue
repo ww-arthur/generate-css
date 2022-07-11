@@ -145,12 +145,16 @@
             And easy to use
           </template>
           <template #text>
-            Making the right choice for colors is hard, and not being able to
-            see how things will look before compiling makes it even harder.
+            Importing fonts in CSS files is tedious, and in most cases can lead
+            to cross-browser issues.
 
             <div class="mt-5">
-              We provide a way to visually config your interface before start
-              coding.
+              We use
+              <a href="https://fonts.google.com/" class="text-primary-tone-5">
+                Google Fonts
+              </a>
+              API for generating all the declarations you'll need for your
+              fonts.
             </div>
           </template>
           <template #content>

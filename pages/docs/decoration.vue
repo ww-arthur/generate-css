@@ -2,7 +2,7 @@
   <div class="fl-grow-1 ov-hidden row jc-center wi-100">
     <div class="col-6 mt-10">
       <div class="fs-8">
-        Utilities
+        Decoration
       </div>
       <div class="opacity-8">
         Decoration classes gives you full control of all colors in your

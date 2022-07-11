@@ -126,16 +126,32 @@
       <div v-for="(theme, i) in config.themes" class="di-flex fl-column">
         <div class="di-flex ai-center mt-1">
           <a-input
+            label="Theme"
             icon="palette"
             :disabled="config.themes[i] === 'default'"
             v-model="config.themes[i]"
           ></a-input>
-          <a-button size="2" color="red" class="ar-1 ml-2" template="text">
+          <a-button
+            :disabled="config.themes[i] === 'default'"
+            size="2"
+            color="red"
+            class="ar-1 ml-2"
+            template="text"
+          >
             <a-icon size="3">delete</a-icon>
           </a-button>
         </div>
       </div>
-
+      <a-button
+        @click="addTheme()"
+        template="text"
+        rounded="3"
+        class="wi-100"
+        size="1"
+      >
+        <a-icon size="2" class="mr-1">plus</a-icon>
+        Add theme
+      </a-button>
       <div class="mt-5 fs-8 dark:text-primary-tint-9 text-primary-shade-9">
         Colors
       </div>
@@ -256,6 +272,9 @@ function addColor() {
     options: { tints: 10, shades: 10, tones: 10, alphas: 10 },
   })
   generateColors(colors.value.length - 1)
+}
+function addTheme() {
+  config.value.themes.push('')
 }
 function filterColors(colorObject: object, key: string) {
   return Object.fromEntries(
