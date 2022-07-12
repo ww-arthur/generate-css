@@ -281,7 +281,7 @@ export function useUtilities(options = variables) {
         l: ['padding-left'],
       },
       values: options.spacers,
-      name: 'Margin',
+      name: 'Padding',
       description: 'Controls the padding area of an element, or inside spacing',
       link: 'https://developer.mozilla.org/en-US/docs/Web/CSS/padding',
     },
