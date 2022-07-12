@@ -15,13 +15,28 @@
       <div class="oy-auto ox-hidden fl-grow-1 pt-5 px-5">
         <slot name="options"></slot>
         <div
-          class="dark:background-grey-shade-13-gradient-bottom background-grey-tint-12-gradient-bottom pa-5 mx-n5 po-sticky bo-default"
+          class="dark:background-grey-shade-13-gradient-bottom background-grey-tint-12-gradient-bottom pa-5 mx-n5 po-sticky bo-0"
         >
           <slot name="optionsFooter">
-            <a-button class="wi-100" size="4" @click="downloadStyle">
-              <a-icon icon="download" class="mr-2"></a-icon>
-              Download CSS
-            </a-button>
+            <a-row cols="12 12" md="6 6" gutter="2">
+              <template #0>
+                <a-button
+                  class="wi-100"
+                  size="3"
+                  template="glassy"
+                  @click="downloadConfig"
+                >
+                  <a-icon icon="download" class="mr-2"></a-icon>
+                  Download Config
+                </a-button>
+              </template>
+              <template #1>
+                <a-button class="wi-100" size="3" @click="downloadStyle">
+                  <a-icon icon="download" class="mr-2"></a-icon>
+                  Download CSS
+                </a-button>
+              </template>
+            </a-row>
           </slot>
         </div>
       </div>
@@ -31,7 +46,7 @@
 <script setup lang="ts">
 import { generateStyle } from '@/config/functions'
 import { generateUtilityValues } from '@/config/utilities'
-const { $downloadStyle } = useNuxtApp()
+const { $downloadStyle, $downloadConfig } = useNuxtApp()
 
 let props = defineProps({
   cardClass: {
@@ -76,6 +91,9 @@ const variables = computed(() => {
   }
 })
 
+function downloadConfig() {
+  $downloadConfig(config.value)
+}
 function downloadStyle() {
   generateStyle(variables.value).then((css) => {
     $downloadStyle(css)

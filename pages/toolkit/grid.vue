@@ -47,7 +47,7 @@
   </main-layout>
 </template>
 <script setup lang="ts">
-import { generateColClasses, generateClasses } from '@/config/functions'
+import { generateColClassArray, generateClasses } from '@/config/functions'
 const { $appendStyle } = useNuxtApp()
 
 let config = useConfig()
@@ -55,12 +55,14 @@ let config = useConfig()
 watch(
   () => config,
   () => {
-    generateStyle()
+    if (process.client) {
+      generateStyle()
+    }
   },
   { deep: true, immediate: true },
 )
 function generateStyle() {
-  let prefixedClasses = generateColClasses(config.value.cols).map(
+  let prefixedClasses = generateColClassArray(config.value.cols).map(
     ([className, content]) => {
       return [`prototype-cols .${className}`, content]
     },

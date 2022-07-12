@@ -57,7 +57,7 @@
   </main-layout>
 </template>
 <script setup lang="ts">
-import { generateUtilityClasses, generateClasses } from '@/config/functions'
+import { generateUtilityClassArray, generateClasses } from '@/config/functions'
 import { generateUtilityValues } from '@/config/utilities'
 const { $appendStyle } = useNuxtApp()
 
@@ -79,7 +79,9 @@ let spacersUnits = ref([
 watch(
   () => config,
   () => {
-    generateStyle()
+    if (process.client) {
+      generateStyle()
+    }
   },
   { deep: true, immediate: true },
 )
@@ -120,7 +122,7 @@ function generateStyle() {
       ),
     },
   }
-  let prefixedClasses = generateUtilityClasses(utilities).map(
+  let prefixedClasses = generateUtilityClassArray(utilities).map(
     ([className, content]) => {
       return [`prototype-spacer .${className}`, content]
     },

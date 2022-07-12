@@ -83,9 +83,9 @@
 </template>
 <script setup lang="ts">
 import {
-  generateUtilityClasses,
+  generateUtilityClassArray,
   generateClasses,
-  prefixClasses,
+  prefixClassArray,
 } from '@/config/functions'
 import { generateUtilityValues } from '@/config/utilities'
 const { $appendStyle } = useNuxtApp()
@@ -149,7 +149,7 @@ function generateStyle() {
   for (var [bName, bValue] of Object.entries(config.value.gridBreakpoints)) {
     css += `@media(min-width: ${bValue}){
     ${generateClasses(
-      prefixClasses(generateUtilityClasses(utilities), bName).map(
+      prefixClassArray(generateUtilityClassArray(utilities), bName).map(
         ([className, content]) => {
           return [`prototype-breakpoint .${className}`, content]
         },
@@ -157,7 +157,6 @@ function generateStyle() {
     )}
   }`
   }
-  console.log(css)
   $appendStyle(css)
 }
 </script>

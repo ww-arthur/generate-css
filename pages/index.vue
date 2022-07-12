@@ -57,7 +57,7 @@
             >
               <template #2>
                 <a-button
-                  to="/docs/utilities"
+                  to="/documentation/utilities"
                   class="wi-100"
                   color="primary"
                   template="text"

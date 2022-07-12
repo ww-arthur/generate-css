@@ -5,7 +5,7 @@
         v-if="modelValue"
         :class="`template`"
         style="z-index: 10;"
-        class="po-fixed to-default dark:text-grey-tint-14 text-grey-shade-14 dark:background-grey-shade-14 background-grey-tint-14 wi-min-100vw he-min-100vh wi-max-100vw he-max-100vh ov-auto py-10 di-flex ai-stretch jc-center"
+        class="po-fixed to-0 dark:text-grey-tint-14 text-grey-shade-14 dark:background-grey-shade-14 background-grey-tint-14 wi-min-100vw he-min-100vh wi-max-100vw he-max-100vh ov-auto py-10 di-flex ai-stretch jc-center"
       >
         <main-layout>
           <template #card>
@@ -326,7 +326,7 @@ import {
   generateClasses,
   generateColorScheme,
   generateStyle,
-  prefixClasses,
+  prefixClassArray,
 } from '@/config/functions'
 import { generateColorValues, isValid } from '@/config/colors'
 const { $appendStyle, $downloadStyle } = useNuxtApp()
@@ -417,7 +417,7 @@ function generateColors() {
   if (!color.value.name || !isValid(color.value.hash)) return
   colorsObject.value = generateColorValues(color.value)
   let colors = generateColorScheme(color.value)
-  $appendStyle(generateClasses(prefixClasses(colors, `template .template`)))
+  $appendStyle(generateClasses(prefixClassArray(colors, `template .template`)))
   /*   generateStyle().then((css) => {
     $appendStyle(css)
   }) */

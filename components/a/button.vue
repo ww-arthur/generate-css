@@ -47,7 +47,7 @@ function computeColors(template, color, size, rounded) {
      background-${color}-gradient-top-left background-${color}-tint-5
      dark:bloom-1-grey-shade-14 dark:bloom-2-grey-shade-14:hover dark:bloom-0-grey:active 
      dark:text-${color}-tint-8 dark:text-${color}-tint-9:hover 
-     dark:background-${color}-gradient-top-left dark:background-${color}-shade-5     `,
+     dark:background-${color}-gradient-top-left dark:background-${color}-shade-5`,
     glassy: `bloom-1-grey-blend-7 bloom-2-grey-blend-4:hover bloom-0-grey:active 
      text-${color}-shade-8 text-${color}-shade-9:hover 
      background-${color}-blend-7-gradient-top-left background-${color}-blend-9
@@ -75,6 +75,7 @@ const computedClasses = computed(() => {
   align-items: center;
   justify-content: center;
   transition: all 0.15s ease-in;
+  backdrop-filter: blur(4px);
 }
 .a-button:hover {
   transform: translate3d(0, -1px, 0);

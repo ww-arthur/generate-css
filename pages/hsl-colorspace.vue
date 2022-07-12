@@ -56,12 +56,10 @@ let colorHex = computed(() => {
 })
 /* let ticking = false
 function draw() {
-  console.log(ticking)
   if (ticking) return
 
   window.requestAnimationFrame(() => {
     var ctx = canvas.value.getContext('2d')
-    console.log({ width: canvas.value.width, height: canvas.value.height })
       for (var i = 0; i < 360; i++) {
     ctx.fillStyle = `hsl(${i}, 100%, 50%)`
     ctx.fillRect(i, 0, 1, 100)

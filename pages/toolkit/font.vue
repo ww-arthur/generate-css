@@ -2,7 +2,7 @@
   <main-layout card-class="prototype-font">
     <template #card>
       <div
-        class="dark:background-grey-shade-11 background-grey-tint-11 po-sticky to-default mx-n10"
+        class="dark:background-grey-shade-11 background-grey-tint-11 po-sticky to-0 mx-n10"
       >
         <div class="row py-1 ai-center mx-5">
           <div class="col-6 px-3">
@@ -80,7 +80,7 @@
 </template>
 <script setup lang="ts">
 import {
-  generateUtilityClasses,
+  generateUtilityClassArray,
   generateClasses,
   generateGoogleFontsLink,
   getCssFontWeights,
@@ -132,7 +132,7 @@ function generateStyle() {
     },
   }
   const css = generateClasses(
-    generateUtilityClasses(fontUtilities).map(([className, content]) => {
+    generateUtilityClassArray(fontUtilities).map(([className, content]) => {
       return [`prototype-font .${className}`, content]
     }),
   )

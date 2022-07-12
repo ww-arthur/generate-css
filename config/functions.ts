@@ -23,7 +23,10 @@ export function generateClasses(classes: Array<Array<string>>) {
 export function addPrefix(prefix: string) {
   return prefix.includes('default') ? '' : `${prefix}-`
 }
-export function prefixClasses(classes: Array<Array<string>>, prefix: string) {
+export function prefixClassArray(
+  classes: Array<Array<string>>,
+  prefix: string,
+) {
   return classes.map((value) => [
     `${prefix.includes('default') ? '' : `${prefix}\\:`}${value[0]}`,
     value[1],
@@ -67,7 +70,7 @@ export function getCssFontWeights(css: string) {
   return Object.fromEntries(utilityValues) as UtilityValues
 }
 
-export function generateUtilityClasses(utilitiesObject: object) {
+export function generateUtilityClassArray(utilitiesObject: object) {
   let style = []
   function generate(utilities: UtilityObject, prefix = '') {
     let classes = []
@@ -149,7 +152,7 @@ export function generateUtilityClasses(utilitiesObject: object) {
   }
   return style
 }
-export function generateColorClasses(
+export function generateColorClassArray(
   colorValues: Object,
   options = { background: true, text: true, border: true },
 ) {
@@ -173,7 +176,7 @@ export function generateColorClasses(
   }
   return classes
 }
-export function generateGradientClasses(colorValues: Object) {
+export function generateGradientClassArray(colorValues: Object) {
   let classes = []
   for (var [key, value] of Object.entries(colorValues)) {
     classes.push([
@@ -183,14 +186,17 @@ export function generateGradientClasses(colorValues: Object) {
   }
   return classes
 }
-export function generateBloomClasses(colorValues: Object, iterations: number) {
+export function generateBloomClassArray(
+  colorValues: Object,
+  iterations: number,
+) {
   let classes = []
-  for (let i = 0; i < iterations; i++) {
+  for (let i = 0; i <= iterations; i++) {
     for (var [key, value] of Object.entries(colorValues)) {
       classes.push([
         `bloom-${i}-${key}`,
-        `filter: drop-shadow(0px ${Math.round(i * 1.4)}px ${Math.round(
-          i * i * 0.5,
+        `filter: drop-shadow(0px ${Math.round(i)}px ${Math.round(
+          i * i * 0.7,
         )}px  ${value})`,
       ])
     }
@@ -200,12 +206,14 @@ export function generateBloomClasses(colorValues: Object, iterations: number) {
 export function generateColorScheme(color: ColorValue) {
   let classes = []
   let colorValues = generateColorValues(color)
-  classes.push(...generateColorClasses(colorValues))
-  classes.push(...generateGradientClasses(generateColorGradients(colorValues)))
-  classes.push(...generateBloomClasses(colorValues, 5))
+  classes.push(...generateColorClassArray(colorValues))
+  classes.push(
+    ...generateGradientClassArray(generateColorGradients(colorValues)),
+  )
+  classes.push(...generateBloomClassArray(colorValues, 5))
   return classes
 }
-export function generateColClasses(iterations: number) {
+export function generateColClassArray(iterations: number) {
   let content = addProperty('flex', '1 0 0%')
   let classes = [['col', content]]
 
@@ -251,7 +259,7 @@ export async function generateStyle(options = variables) {
         )
         opacityClasses.push(
           ...suffixClasses(
-            generateUtilityClasses({
+            generateUtilityClassArray({
               opacity: {
                 properties: ['opacity'],
                 values: generateUtilityValues(10, '', 0.1),
@@ -262,15 +270,19 @@ export async function generateStyle(options = variables) {
         )
       }
       classes.push(...opacityClasses)
-      classes.push(...prefixClasses(selectorClasses, `${theme} .${theme}`))
+      classes.push(...prefixClassArray(selectorClasses, `${theme} .${theme}`))
     }
     css += generateClasses(classes)
 
     // Responsive utilities
     for (var [bName, bValue] of Object.entries(options.gridBreakpoints)) {
       css += `@media(min-width: ${bValue}){
-    ${generateClasses(prefixClasses(generateUtilityClasses(utilities), bName))}
-    ${generateClasses(prefixClasses(generateColClasses(options.cols), bName))}
+    ${generateClasses(
+      prefixClassArray(generateUtilityClassArray(utilities), bName),
+    )}
+    ${generateClasses(
+      prefixClassArray(generateColClassArray(options.cols), bName),
+    )}
   }`
     }
   } catch (err) {

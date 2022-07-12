@@ -22,7 +22,9 @@
             :class="`ro-${col.name}`"
           >
             <div
-              :class="`ro-${col.name}`"
+              :class="`ro-${col.name} ${
+                col.name === 'circle' ? 'ar-1 di-flex jc-center ai-center' : ''
+              }`"
               class="pa-4 background-grey-shade-6 te-nowrap text-grey-tint-13"
             >
               {{ `ro-${col.name}` }}
@@ -47,7 +49,7 @@
       <div class="row mx-n4">
         <div class="col-6 md:col-4 lg:col-2 pa-4">
           <div
-            class="background-grey ro-5 border-primary wi-100 ar-1 di-flex ai-center jc-center"
+            class="background-grey-blend-7 ro-5 border-primary wi-100 ar-1 di-flex ai-center jc-center"
             :class="`bw-0`"
           >
             bw-0
@@ -58,7 +60,7 @@
           v-for="borderWidth in config.borderWidths.iterations"
         >
           <div
-            class="background-grey ro-5 border-primary wi-100 ar-1 di-flex ai-center jc-center"
+            class="background-grey-blend-7 ro-5 border-primary wi-100 ar-1 di-flex ai-center jc-center"
             :class="`bw-${borderWidth}`"
           >
             bw-{{ borderWidth }}
@@ -130,7 +132,7 @@
   </main-layout>
 </template>
 <script setup lang="ts">
-import { generateUtilityClasses, generateClasses } from '@/config/functions'
+import { generateUtilityClassArray, generateClasses } from '@/config/functions'
 import { generateUtilityValues } from '@/config/utilities'
 const { $appendStyle } = useNuxtApp()
 let borderWidthUnits = ref([
@@ -161,7 +163,9 @@ const borderRadiusCols = computed(() =>
 watch(
   config,
   () => {
-    generateStyle()
+    if (process.client) {
+      generateStyle()
+    }
   },
   { deep: true, immediate: true },
 )
@@ -196,7 +200,7 @@ function generateStyle() {
       ),
     },
   }
-  let prefixedClasses = generateUtilityClasses(utilities).map(
+  let prefixedClasses = generateUtilityClassArray(utilities).map(
     ([className, content]) => {
       return [`prototype-borders .${className}`, content]
     },

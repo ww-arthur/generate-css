@@ -78,7 +78,6 @@ watch(
   },
 )
 function focus() {
-  console.log('focus')
   isFocused.value = true
 }
 function blur() {
@@ -91,7 +90,6 @@ function animateLabel() {
 
   var x = parentRect.x - labelRect.x
   var y = parentRect.y - labelRect.y
-  console.log({ x, y })
   inputLabel.value.animate(
     [
       {

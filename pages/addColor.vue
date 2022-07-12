@@ -24,8 +24,8 @@
                 class="color-hover te-center"
                 :class="
                   parseInt(hash.slice(1, 7), 16) > 10230527
-                    ? 'text-grey'
-                    : 'text-white'
+                    ? 'text-grey-shade-9'
+                    : 'text-grey-tint-9'
                 "
               >
                 {{ name }}
@@ -47,7 +47,14 @@
               :class="`py-10 template:background-${name}`"
               v-for="(hash, name) in filterColors(colorsObject, 'shade')"
             >
-              <div class="color-hover te-center">
+              <div
+                class="color-hover te-center"
+                :class="
+                  parseInt(hash.slice(1, 7), 16) > 10230527
+                    ? 'text-grey-shade-9'
+                    : 'text-grey-tint-9'
+                "
+              >
                 {{ name }}
                 <br />
                 {{ hash }}
@@ -66,7 +73,14 @@
               :class="`py-10 template:background-${name}`"
               v-for="(hash, name) in filterColors(colorsObject, 'tone')"
             >
-              <div class="color-hover te-center">
+              <div
+                :class="
+                  parseInt(hash.slice(1, 7), 16) > 10230527
+                    ? 'text-grey-shade-9'
+                    : 'text-grey-tint-9'
+                "
+                class="color-hover te-center"
+              >
                 {{ name }}
                 <br />
                 {{ hash }}
@@ -86,7 +100,14 @@
               :class="`template:background-${name}`"
               v-for="(hash, name) in filterColors(colorsObject, 'blend')"
             >
-              <div class="color-hover te-center">
+              <div
+                :class="
+                  parseInt(hash.slice(1, 7), 16) > 10230527
+                    ? 'text-grey-shade-9'
+                    : 'text-grey-tint-9'
+                "
+                class="color-hover te-center"
+              >
                 {{ name }}
                 <br />
                 {{ hash }}
@@ -267,7 +288,7 @@ import {
   generateClasses,
   generateColorScheme,
   generateStyle,
-  prefixClasses,
+  prefixClassArray,
 } from '@/config/functions'
 import { generateColorValues, isValid } from '@/config/colors'
 const { $appendStyle, $downloadStyle } = useNuxtApp()
@@ -311,7 +332,7 @@ function generateColors() {
   if (!color.value.name || !isValid(color.value.hash)) return
   colorsObject.value = generateColorValues(color.value)
   let colors = generateColorScheme(color.value)
-  $appendStyle(generateClasses(prefixClasses(colors, `template .template`)))
+  $appendStyle(generateClasses(prefixClassArray(colors, `template .template`)))
   /*   generateStyle().then((css) => {
     $appendStyle(css)
   }) */

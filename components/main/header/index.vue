@@ -15,11 +15,7 @@
           <main-header-nav to="/guide" icon="school" class="col">
             Guide
           </main-header-nav>
-          <main-header-nav
-            to="/docs/utilities"
-            icon="file-document"
-            class="col"
-          >
+          <main-header-nav to="/documentation" icon="file-document" class="col">
             Docs
           </main-header-nav>
           <main-header-nav to="/toolkit/font" icon="cog" class="col">

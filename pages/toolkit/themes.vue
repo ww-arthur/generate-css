@@ -8,7 +8,7 @@
 
       <div
         v-for="(color, i) in colors"
-        class="row background-grey-tint-15 dark:background-grey-shade-10 elevated ro-5 my-5 dark:bloom-2-grey-shade-14 bloom-2-grey-blend-8"
+        class="row background-grey-tint-15 dark:background-grey-shade-10 ro-5 my-5 dark:bloom-2-grey-shade-14 bloom-2-grey-blend-8"
       >
         <div
           class="col-1 background-primary ro-left-5 elevated"
@@ -208,7 +208,7 @@ import {
   generateClasses,
   generateColorScheme,
   generateStyle,
-  prefixClasses,
+  prefixClassArray,
 } from '@/config/functions'
 import { generateColorValues, isValid } from '@/config/colors'
 const { $appendStyle } = useNuxtApp()
@@ -242,7 +242,7 @@ function generateColors(i: number) {
   colorsClasses.value[i] = generateColorValues(color)
   $appendStyle(
     generateClasses(
-      prefixClasses(
+      prefixClassArray(
         generateColorScheme(color),
         `prototype-colors .prototype-colors`,
       ),
@@ -287,7 +287,7 @@ onBeforeMount(() => {
   colors.value.forEach((color, i) => {
     $appendStyle(
       generateClasses(
-        prefixClasses(
+        prefixClassArray(
           generateColorScheme(color),
           `prototype-colors .prototype-colors`,
         ),
@@ -298,28 +298,10 @@ onBeforeMount(() => {
 })
 </script>
 <style scoped>
-.theme-color-wrapper {
-  will-change: flex-basis;
-
-  flex-basis: 1px;
-  transition: flex-basis 0.3s;
-}
-.theme-color-wrapper:hover {
-  flex-basis: 150px;
-}
 .theme-color-hover {
-  width: 0;
-  white-space: nowrap;
-  will-change: opacity, width;
+  display: none;
+}
 
-  transition: opacity 0.3s, width 0.5s;
-  opacity: 0;
-  overflow: hidden;
-}
-div:hover > .theme-color-hover {
-  width: 150px;
-  opacity: 1;
-}
 .png-squares {
   position: relative;
   background-repeat: repeat;
