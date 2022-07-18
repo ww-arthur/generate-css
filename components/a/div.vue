@@ -1,26 +1,50 @@
 <template>
-  <div :class="computedClasses"><slot /></div>
+  <div :class="computedClasses">
+    <slot />
+  </div>
 </template>
-<script setup>
-const darkMode = useState('darkMode')
+<script setup lang="ts">
 const props = defineProps({
-  light: {
-    type: [String, Object, Array],
-    default: '',
+  colors: {
+    type: Object,
+    default: {},
   },
-  dark: {
-    type: [String, Object, Array],
-    default: '',
+  utils: {
+    type: Object,
+    default: {},
   },
 })
-</script>
-<script>
-export default {
-  computed: {
-    computedClasses() {
-      return this.darkMode ? this.dark : this.light
-    },
-  },
+function prefixClasses(prefix: string, classes: Array<string>) {
+  return classes.map((value) => [
+    `${prefix.includes('default') ? '' : `${prefix}:`}${value}`,
+  ])
 }
+function objectToPrefixedString(obj: Object) {
+  return Object.entries(obj)
+    .map(([prefix, value]) => {
+      return prefixClasses(
+        prefix,
+        value.split(' ').filter((v) => v),
+      ).join(' ')
+    })
+    .join(' ')
+}
+let computedClasses = computed(() => {
+  return `${objectToPrefixedString(props.colors)} ${objectToPrefixedString(
+    props.utils,
+  )}`
+})
 </script>
+<!-- <script setup>
+import config from '@/flui.config.json'
+const props = defineProps({
+  ...Object.fromEntries(
+    config.themes.map((theme) => [theme, { type: String, default: 'a' }]),
+  ),
+})
+let attrs = useAttrs()
+let computedClasses = computed(() => {
+  return Object.keys(attrs)
+})
+</script> -->
 <style lang="scss" scoped></style>

@@ -26,15 +26,24 @@ export function addPrefix(prefix: string) {
 export function prefixClassArray(
   classes: Array<Array<string>>,
   prefix: string,
+  cssFriendly?: true,
 ) {
   return classes.map((value) => [
-    `${prefix.includes('default') ? '' : `${prefix}\\:`}${value[0]}`,
+    `${
+      prefix.includes('default') ? '' : `${prefix}${cssFriendly ? '\\:' : ':'}`
+    }${value[0]}`,
     value[1],
   ])
 }
-export function suffixClasses(classes: Array<Array<string>>, suffix: string) {
+export function suffixClassArray(
+  classes: Array<Array<string>>,
+  suffix: string,
+  cssFriendly?: true,
+) {
   return classes.map((value) => [
-    `${value[0]}${suffix.includes('default') ? '' : `\\:${suffix}`}`,
+    `${value[0]}${
+      suffix.includes('default') ? '' : `${cssFriendly ? '\\:' : ':'}${suffix}`
+    }`,
     value[1],
   ])
 }
@@ -255,10 +264,10 @@ export async function generateStyle(options = variables) {
       let selectorClasses = []
       for (var [sName, sSelector] of Object.entries(options.selectors)) {
         selectorClasses.push(
-          ...suffixClasses(colorClasses, `${sName}${sSelector}`),
+          ...suffixClassArray(colorClasses, `${sName}${sSelector}`),
         )
         opacityClasses.push(
-          ...suffixClasses(
+          ...suffixClassArray(
             generateUtilityClassArray({
               opacity: {
                 properties: ['opacity'],
