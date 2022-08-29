@@ -26,11 +26,10 @@ export function addPrefix(prefix: string) {
 export function prefixClassArray(
   classes: Array<Array<string>>,
   prefix: string,
-  cssFriendly?: true,
 ) {
   return classes.map((value) => [
     `${
-      prefix.includes('default') ? '' : `${prefix}${cssFriendly ? '\\:' : ':'}`
+      prefix.includes('default') ? '' : `${prefix}\\:`
     }${value[0]}`,
     value[1],
   ])
@@ -38,11 +37,10 @@ export function prefixClassArray(
 export function suffixClassArray(
   classes: Array<Array<string>>,
   suffix: string,
-  cssFriendly?: true,
 ) {
   return classes.map((value) => [
     `${value[0]}${
-      suffix.includes('default') ? '' : `${cssFriendly ? '\\:' : ':'}${suffix}`
+      suffix.includes('default') ? '' : `\\:${suffix}`
     }`,
     value[1],
   ])
